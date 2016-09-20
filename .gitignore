@@ -1,0 +1,14 @@
+
+# Typing TSD #
+/typings/
+
+
+/node_modules/
+
+# Dist #
+/dist
+
+
+# IDE #
+.idea/
+*.swp
