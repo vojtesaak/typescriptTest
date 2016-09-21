@@ -9,8 +9,8 @@ import '@angular/router';
 
 
 // RxJS 5
-// import 'rxjs/Rx';
 
+import 'rxjs/Rx';
 import 'socket.io-client';
 
 

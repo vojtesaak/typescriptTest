@@ -1,44 +1,40 @@
 'use strict';
 
-import * as _ from 'lodash';
 
 const config = {
 
-    /**
-     * @type {Boolean}
-     */
-    production: false,
+	env: null,
 
-    /**
-     * @type {Boolean}
-     */
-    debugEnabled: true,
 
-    /**
-     * [initialize description]
-     * @param {String} environment
-     */
-    initialize (environment) {
+	/**
+	 * [initialize description]
+	 * @param {String} environment
+	 */
+	initialize (environment: string) {
 
-        if (!environment) {
-            return;
-        }
-/*
-        const defaultConfig = require(`./config.default`);
-        Object.assign(this, defaultConfig);
-*/
-        try {
-            const configuration = require(`./config.${environment}`);
-            _.assign(this, configuration);
-        } catch (e) {
-            console.log(`Failed to log configuration for ENV: ${environment}`);
-        }
+		if (!environment) {
+			return;
+		} else {
+			this.env = environment;
+		}
 
-    }
+		const defaultConfig = require(`./config.default`);
+		Object.assign(this, defaultConfig);
+
+		try {
+			const configuration = require(`./config.${environment}`);
+			Object.assign(this, configuration);
+
+		} catch (e) {
+			console.log(`Failed to log configuration for ENV: ${environment}`);
+		}
+
+		return this;
+
+	}
 
 
 };
 
-config.initialize(process.env.NODE_ENV || 'development');
 
-export default config;
+export default config.initialize(process.env.NODE_ENV || 'development');
