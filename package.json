@@ -5,12 +5,13 @@
   "main": "",
   "scripts": {
     "postinstall": "./node_modules/.bin/typings install",
-    "build": "gulp",
-    "start": "node ./dist/server/server.js"
+    "buildGulp": "gulp",
+    "buildWebpack": "webpack --config webpack.server.config.js",
+    "start": "node ./server/dist/server.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/marc-harry/angular2-express-webpack"
+    "url": ""
   },
   "author": "",
   "license": "MIT",
@@ -37,8 +38,6 @@
     "rxjs": "5.0.0-beta.6",
     "socket.io": "^1.4.8",
     "socket.io-client": "^1.4.8",
-    "style-loader": "^0.12.4",
-    "ts-loader": "0.5.6",
     "zone.js": "^0.6.25"
   },
   "devDependencies": {
@@ -48,11 +47,13 @@
     "gulp-nodemon": "^2.1.0",
     "json-loader": "^0.5.4",
     "raw-loader": "^0.5.1",
+    "style-loader": "^0.12.4",
     "to-string-loader": "^1.1.4",
+    "ts-loader": "^0.8.2",
     "typescript": "~1.8.9",
     "typings": "~1.0.3",
     "webpack": "1.12.2",
-    "webpack-stream": "^2.1.1",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "webpack-stream": "^2.1.1"
   }
 }

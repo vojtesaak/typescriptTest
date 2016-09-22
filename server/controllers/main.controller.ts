@@ -1,11 +1,10 @@
 
-'use strict';
-
 import path = require('path');
 
 
 const mainController = function(req, res) {
-	res.sendFile(path.join(process.cwd(), '/server/views', 'index.html'))
+	console.log('--------', path.join('../views/index.html'));
+	res.sendFile('../views/index.html', { root: __dirname });
 };
 
 module.exports = mainController;

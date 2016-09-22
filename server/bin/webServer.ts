@@ -1,8 +1,5 @@
-#!/usr/bin/env node
-'use strict';
 
-const http = require('http');
-import config from '../config';
+import http = require('http');
 
 /**
  * @param  {*} val input

@@ -1,0 +1,7 @@
+'use strict';
+module.exports = {
+    host: '127.0.0.1',
+    port: 3333
+};
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbmZpZy9jb25maWcuZGVmYXVsdC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxZQUFZLENBQUM7QUFHYixNQUFNLENBQUMsT0FBTyxHQUFHO0lBRWIsSUFBSSxFQUFFLFdBQVc7SUFFakIsSUFBSSxFQUFFLElBQUk7Q0FFYixDQUFDIiwiZmlsZSI6ImNvbmZpZy9jb25maWcuZGVmYXVsdC5qcyIsInNvdXJjZXNDb250ZW50IjpbIid1c2Ugc3RyaWN0JztcblxuXG5tb2R1bGUuZXhwb3J0cyA9IHtcblxuICAgIGhvc3Q6ICcxMjcuMC4wLjEnLFxuXG4gICAgcG9ydDogMzMzM1xuXG59O1xuIl0sInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9

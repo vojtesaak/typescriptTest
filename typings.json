@@ -1,6 +1,15 @@
 {
-	"name": "angular2-seed",
+	"name": "",
 	"version": false,
+	"compilerOptions": {
+		"noImplicitAny": true,
+		"removeComments": true,
+		"target": "es5",
+		"sourceMap": true
+	},
+	"exclude": [
+		"node_modules"
+	],
 	"dependencies": {
 		"lodash": "registry:npm/lodash#4.0.0+20160701205107"
 	},
