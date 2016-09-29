@@ -9,39 +9,29 @@ const app = express();
 
 const webServer = require('./bin/webServer');
 const controllers = require('./controllers');
+const webpackClientConfig = require('../../webpack.client.config.js');
 
-
-const ROOT = path.join(__dirname, '../../');
-const DIST_PATH = path.join(ROOT, 'dist/public');
-const ASSETS_PATH = path.join(ROOT, 'client/assets');
-
+const ROOT = process.cwd();
 
 app.io = io;
 
-app.set('host', config.host || '0.0.0.0');
+app.set('host', config.host || '127.0.0.1');
 app.set('port', config.port || 3000);
 
-
-app.set('views', path.join(ROOT, 'server/views'));
-
-app.use('/dist', express.static(DIST_PATH));
-app.use('/assets', express.static(ASSETS_PATH));
+app.use('/bundles', express.static(path.join(ROOT, 'client/dist')));
+app.use(express.static(path.join(ROOT, 'client/public')));
+app.use(express.static(path.join(ROOT, 'server/views')));
 
 app.use(controllers);
 
 
-
-
-webServer.pre((server) => {
+webServer.pre(server => {
 
 	io.attach(server);
-
 	const messages: string[] = [];
 
 	io.on('connection', function(socket) {
-
 		socket.emit('updateMessage',messages);
-
 		socket.on('message', function(message){
 			messages.push(new Date() + '  ' + message);
 			console.log(messages);
@@ -52,19 +42,14 @@ webServer.pre((server) => {
 
 });
 
+
 webServer.after(()=> {
 
 	if (config.env === 'development') {
-
 		const webpack = require('webpack');
-		const webpackConfig = require(path.join(ROOT, 'webpack.client.config.js'));
 		const webpackDevMiddleware = require('webpack-dev-middleware');
-		const compiler = webpack(webpackConfig);
-
-
+		const compiler = webpack(webpackClientConfig);
 		app.use(webpackDevMiddleware(compiler, {}));
-
-
 	}
 
 });

@@ -6,8 +6,8 @@
 /node_modules/
 
 # Dist #
-/dist
-
+client/dist
+server/dist
 
 # IDE #
 .idea/

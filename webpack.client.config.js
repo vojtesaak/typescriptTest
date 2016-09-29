@@ -2,27 +2,41 @@
 
 var webpack = require('webpack');
 var path = require('path');
+var config = require('./server/src/config');
 
-var CLIENT_PATH = path.join(__dirname,'/client/src/');
 
+var PATHS = {
+	src: path.resolve('./client/src'),
+	build: path.resolve('./client/dist/')
+};
+
+console.log(PATHS.build);
 
 var webpackConfig = {
 
+	cache: true,
+
 	watch: true,
 
+	context: PATHS.src,
+
 	entry: {
-		'polyfills': path.join(CLIENT_PATH, 'polyfills.browser.ts'),
-		'vendor':    path.join(CLIENT_PATH, 'vendor.browser.ts'),
-		'main':      path.join(CLIENT_PATH, 'main.browser.ts')
+		'webpackDevServer': 'webpack-dev-server/client?http://localhost:' + config.port,
+		'webpackHotReload': 'webpack/hot/dev-server',
+
+		'polyfills':  './polyfills.browser.ts',
+		'vendor':    './vendor.browser.ts',
+		'main':      './main.browser.ts'
 	},
 
+
 	resolve: {
-		root: __dirname,
+		root: PATHS.src,
 		extensions: ['', '.ts', '.js', '.json']
 	},
 
 	output: {
-		path: path.join(__dirname, 'dist/public/'),
+		path: PATHS.build,
 		filename: '[name].bundle.js',
 		sourceMapFilename: '[name].js.map',
 		chunkFilename: '[id].chunk.js'
@@ -38,19 +52,33 @@ var webpackConfig = {
 				'polyfills'
 			],
 			minChunks: Infinity
-		})
+		}),
+		new webpack.HotModuleReplacementPlugin()
 	],
 
 	module: {
 		loaders: [
 			// .ts files for TypeScript
-			{ test: /\.ts$/, loaders: ['awesome-typescript-loader', 'angular2-template-loader'] },
-			{ test: /\.css$/, loaders: ['to-string-loader', 'css-loader'] },
+			{
+				test: /\.ts$/,
+				loaders: ['awesome-typescript-loader', 'angular2-template-loader'],
+				include: PATHS.src
+			},
+			{
+				test: /\.css$/,
+				loaders: ['to-string-loader', 'css-loader']
+			},
 			{ test: /\.html$/, loader: 'raw-loader' },
 			{ test: /\.json$/, loader: 'json-loader' }
 		]
+	},
+
+	devServer: {
+		hot: true,
+		contentBase: './client/public/assets'
 	}
 
 };
+
 
 module.exports = webpackConfig;
