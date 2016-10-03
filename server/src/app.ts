@@ -2,6 +2,7 @@
 
 import path = require('path');
 import config from './config';
+import * as webpackDevServer from './webpack.dev.server';
 
 const express = require('express');
 const io = require('socket.io')();
@@ -9,7 +10,6 @@ const app = express();
 
 const webServer = require('./bin/webServer');
 const controllers = require('./controllers');
-const webpackClientConfig = require('../../webpack.client.config.js');
 
 const ROOT = process.cwd();
 
@@ -45,16 +45,12 @@ webServer.pre(server => {
 
 webServer.after(()=> {
 
-	if (config.env === 'development') {
-		const webpack = require('webpack');
-		const webpackDevMiddleware = require('webpack-dev-middleware');
-		const compiler = webpack(webpackClientConfig);
-		app.use(webpackDevMiddleware(compiler, {}));
-	}
+	webpackDevServer.init();
 
 });
 
 webServer.run(app);
+
 
 
 

@@ -2,5 +2,5 @@
 
 
 module.exports = {
-
+	devServerPort: 3333
 };

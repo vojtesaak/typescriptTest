@@ -2,8 +2,6 @@
 
 var webpack = require('webpack');
 var path = require('path');
-var config = require('./server/src/config');
-
 
 var PATHS = {
 	src: path.resolve('./client/src'),
@@ -14,19 +12,16 @@ console.log(PATHS.build);
 
 var webpackConfig = {
 
-	cache: true,
-
-	watch: true,
+	//watch: true,
 
 	context: PATHS.src,
 
 	entry: {
-		'webpackDevServer': 'webpack-dev-server/client?http://localhost:' + config.port,
-		'webpackHotReload': 'webpack/hot/dev-server',
-
-		'polyfills':  './polyfills.browser.ts',
-		'vendor':    './vendor.browser.ts',
-		'main':      './main.browser.ts'
+		app: [
+			'./polyfills.browser.ts',
+			'./vendor.browser.ts',
+			'./main.browser.ts'
+		]
 	},
 
 
@@ -37,19 +32,16 @@ var webpackConfig = {
 
 	output: {
 		path: PATHS.build,
-		filename: '[name].bundle.js',
-		sourceMapFilename: '[name].js.map',
-		chunkFilename: '[id].chunk.js'
+		filename: 'scripts.js',
+		publicPath: '/bundles/'
 	},
 
 	plugins: [
-		new webpack.optimize.UglifyJsPlugin(),
-		new webpack.optimize.OccurenceOrderPlugin(true),
+		//new webpack.optimize.UglifyJsPlugin(),
+		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: [
-				'main',
-				'vendor',
-				'polyfills'
+				'app'
 			],
 			minChunks: Infinity
 		}),
@@ -73,10 +65,8 @@ var webpackConfig = {
 		]
 	},
 
-	devServer: {
-		hot: true,
-		contentBase: './client/public/assets'
-	}
+	devtool : 'source-map'
+
 
 };
 

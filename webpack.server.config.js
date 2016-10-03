@@ -17,7 +17,7 @@ function getModules() {
 
 
 module.exports = {
-	entry: [ path.join(__dirname, '/server/src/server.ts') ],
+	entry: [ path.join(__dirname, '/server/src/app.ts') ],
 	target: 'node',
 	output: {
 		path: path.join(__dirname, '/server/dist/'),

@@ -7,7 +7,7 @@
     "postinstall": "./node_modules/.bin/typings install",
     "buildGulp": "gulp",
     "buildWebpack": "webpack --config webpack.server.config.js",
-	  "buildWebpackClient": "webpack --config webpack.client.config.js",
+    "buildWebpackClient": "webpack --config webpack.client.config.js",
     "start": "node ./server/dist/server-bundle.js"
   },
   "repository": {
@@ -39,14 +39,14 @@
     "zone.js": "^0.6.25"
   },
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-typescript": "^2.9.2",
-    "gulp-concat": "^2.6.0",
     "angular2-template-loader": "^0.4.0",
     "awesome-typescript-loader": "^1.1.1",
     "css-loader": "^0.23.1",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
     "gulp-nodemon": "^2.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-typescript": "^2.9.2",
     "json-loader": "^0.5.4",
     "raw-loader": "^0.5.1",
     "style-loader": "^0.12.4",
@@ -55,7 +55,9 @@
     "typescript": "~1.8.9",
     "typings": "~1.0.3",
     "webpack": "1.12.2",
-    "webpack-dev-server": "^1.14.1",
+    "webpack-dev-middleware": "^1.8.3",
+    "webpack-dev-server": "^1.16.1",
+    "webpack-hot-middleware": "^2.12.2",
     "webpack-stream": "^2.1.1"
   }
 }
