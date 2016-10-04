@@ -27,13 +27,13 @@ module.exports = {
 		extensions: [ '', '.webpack.js', '.web.js', '.ts', '.js']
 	},
 	plugins: [
-		new webpack.optimize.UglifyJsPlugin(),
+		//new webpack.optimize.UglifyJsPlugin(), add to production
 		new webpack.BannerPlugin(
 			'require("source-map-support").install();',
 			{ raw: true, entryOnly: false }
 			)
 	],
-	externals: getModules() ,
+	externals: getModules(),
 	module: {
 		loaders: [
 			{

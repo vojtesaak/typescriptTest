@@ -5,10 +5,11 @@ import config from './config';
 
 const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
-const webpackConfig = require('../../webpack.client.config.js');
+const webpackConfig = require('../../webpack.client.config');
 
 
 function init() {
+	console.log(webpackConfig);
 	webpackConfig.entry.app.unshift(`webpack-dev-server/client?http://localhost:${config.devServerPort}/`, 'webpack/hot/dev-server');
 	const compiler = webpack(webpackConfig);
 

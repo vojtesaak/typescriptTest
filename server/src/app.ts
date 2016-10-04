@@ -44,9 +44,7 @@ webServer.pre(server => {
 
 
 webServer.after(()=> {
-
 	webpackDevServer.init();
-
 });
 
 webServer.run(app);
