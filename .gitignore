@@ -12,3 +12,7 @@ server/dist
 # IDE #
 .idea/
 *.swp
+
+
+githubSSH
+githubSSH.pub
