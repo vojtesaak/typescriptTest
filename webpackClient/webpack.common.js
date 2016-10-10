@@ -8,30 +8,24 @@ const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin')
 const OccurenceOrderPlugin = require('webpack/lib/optimize/OccurenceOrderPlugin');
 const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 
-const PATHS = {
-	src: path.resolve('../client/src'),
-	build: path.resolve('../client/dist/')
-};
-
 
 const METADATA = {
 	title: 'IBB pack',
-	baseUrl: '/',
-	isDevServer: helpers.isWebpackDevServer()
+	baseUrl: '/'
 };
+
+const srcPath = helpers.PATHS.src;
 
 
 module.exports = function(options) {
-
-	var isProd = options.env === 'production';
 
 	return {
 
 		metadata: METADATA,
 
-		//cache: false,
+		cache: false,
 
-		context: PATHS.src,
+		context: srcPath,
 
 		entry: {
 			app: [
@@ -42,19 +36,18 @@ module.exports = function(options) {
 		},
 
 		output: {
-			path: PATHS.build,
+			path: helpers.PATHS.build,
 			filename: 'scripts.js',
 			publicPath: '/bundles/'
 		},
 
 		resolve: {
-			root: PATHS.src,
-			extensions: ['', '.ts', '.js', '.json'],
+			root: srcPath,
+			extensions: ['', '.ts', '.js', '.json']
 			// An array of directory names to be resolved to the current directory
-			//modules: [helpers.root('src'), 'node_modules']
+			//modules: [srcPath, 'node_modules']
 
 		},
-
 
 
 		module: {
@@ -68,7 +61,7 @@ module.exports = function(options) {
 						replace: '$1.import($3).then(mod => (mod.__esModule && mod.default) ? mod.default : mod)',
 						flags: 'g'
 					},
-					//include: [helpers.root('src')]
+					include: [srcPath]
 				}
 			],
 
@@ -76,7 +69,7 @@ module.exports = function(options) {
 				{
 					test: /\.ts$/,
 					loaders: ['awesome-typescript-loader', 'angular2-template-loader'],
-					include: PATHS.src,
+					include: srcPath,
 					exclude: [/\.(spec|e2e)\.ts$/]
 				},
 
@@ -93,7 +86,7 @@ module.exports = function(options) {
 				{
 					test: /\.html$/,
 					loader: 'raw-loader',
-					exclude: [helpers.root('src/index.html')]
+					exclude: [helpers.PATHS.root.join('server/views/index.html')]
 				},
 				{
 					test: /\.(jpg|png|gif)$/,
@@ -122,7 +115,8 @@ module.exports = function(options) {
 			new CommonsChunkPlugin({
 				name: [
 					'app'
-				].reverse()
+				],
+				minChunks: Infinity
 			})
 
 		],
@@ -138,4 +132,4 @@ module.exports = function(options) {
 		}
 
 	};
-}
+};

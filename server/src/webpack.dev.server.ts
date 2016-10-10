@@ -9,21 +9,11 @@ const webpackConfig = require('../../webpack.client.config');
 
 
 function init() {
-	console.log(webpackConfig);
+
 	webpackConfig.entry.app.unshift(`webpack-dev-server/client?http://localhost:${config.devServerPort}/`, 'webpack/hot/dev-server');
+
 	const compiler = webpack(webpackConfig);
-
-	const server = new WebpackDevServer(compiler, {
-
-		hot: true,
-
-		clientLogLevel: 'info',
-		quiet: false,
-		noInfo: false,
-
-		publicPath: '/bundles/',
-		stats: { colors: true }
-	});
+	const server = new WebpackDevServer(compiler, config.devServerConfig);
 
 	server.listen(config.devServerPort, 'localhost', () => {
 		console.log(`devServer listening on port: ${config.devServerPort}` );

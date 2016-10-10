@@ -7,21 +7,21 @@ const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlug
 
 
 
-const ENV = process.env.ENV = process.env.NODE_ENV = 'development';
-const HOST = process.env.HOST || 'localhost';
-const PORT = process.env.PORT || 3000;
-const HMR = helpers.hasProcessFlag('hot');
-
-const METADATA = webpackMerge(commonConfig({env: ENV}).metadata, {
-	host: HOST,
-	port: PORT,
-	ENV: ENV,
-	HMR: HMR
-});
-
 
 module.exports = function(options) {
-	console.log('ok');
+
+	const ENV = options.env;
+	const HOST = process.env.HOST || 'localhost';
+	const PORT = process.env.PORT || 3000;
+	const HMR = helpers.hasProcessFlag('hot');
+
+	const METADATA = webpackMerge(commonConfig({env: ENV}).metadata, {
+		host: HOST,
+		port: PORT,
+		ENV: ENV,
+		HMR: HMR
+	});
+
 	return webpackMerge(commonConfig({env: ENV}), {
 
 		metadata: METADATA,
@@ -45,14 +45,13 @@ module.exports = function(options) {
 
 		],
 
-/*
+
 		tslint: {
 			emitErrors: false,
 			failOnHint: false,
 			resourcePath: 'src'
 		},
 
-*/
 
 		node: {
 			global: 'window',

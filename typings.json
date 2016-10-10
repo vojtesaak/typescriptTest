@@ -3,6 +3,7 @@
 	"version": false,
 	"compilerOptions": {
 		"moduleResolution": "node",
+		"module": "commonjs",
 		"target": "es5",
 		"sourceMap": true,
 		"emitDecoratorMetadata": true,
@@ -12,10 +13,19 @@
 	},
 	"exclude": [
 		"node_modules",
-		"typings"
+		"typings",
+		"server/dist",
+		"client/dist"
 	],
+	"awesomeTypescriptLoaderOptions": {
+		"forkChecker": true,
+		"useWebpackText": true
+	},
 	"globalDependencies": {
 		"core-js": "registry:dt/core-js#0.0.0+20160602141332",
-		"node": "registry:dt/node#6.0.0+20160621231320"
+		"node": "registry:dt/node#6.0.0+20160928143418"
+	},
+	"dependencies": {
+		"webpack": "registry:npm/webpack#1.12.9+20160418172948"
 	}
 }

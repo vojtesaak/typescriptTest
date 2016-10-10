@@ -1,6 +1,4 @@
-/**
- * @author: @AngularClass
- */
+
 
 const helpers = require('./helpers');
 
@@ -14,14 +12,8 @@ const ENV = process.env.ENV = process.env.NODE_ENV = 'test';
 module.exports = function(options) {
 	return {
 
-		/**
-		 * Source map for Karma from the help of karma-sourcemap-loader &  karma-webpack
-		 *
-		 * Do not change, leave as is or it wont work.
-		 * See: https://github.com/webpack/karma-webpack#source-maps
-		 */
-		devtool: 'inline-source-map',
 
+		devtool: 'inline-source-map',
 
 
 		module: {
@@ -29,15 +21,10 @@ module.exports = function(options) {
 
 			preLoaders: [
 
-				/**
-				 * Tslint loader support for *.ts files
-				 *
-				 * See: https://github.com/wbuchwalter/tslint-loader
-				 */
 				{
 					test: /\.ts$/,
 					loader: 'tslint-loader',
-					exclude: [helpers.root('node_modules')]
+					exclude: [helpers.PATHS.root.join('node_modules')]
 				},
 
 				{
@@ -45,8 +32,8 @@ module.exports = function(options) {
 					loader: 'source-map-loader',
 					exclude: [
 						// these packages have problems with their sourcemaps
-						helpers.root('node_modules/rxjs'),
-						helpers.root('node_modules/@angular')
+						helpers.PATHS.root.join('node_modules/rxjs'),
+						helpers.PATHS.root.join('node_modules/@angular')
 					]}
 
 			],
@@ -72,18 +59,18 @@ module.exports = function(options) {
 				{
 					test: /\.json$/,
 					loader: 'json-loader',
-					exclude: [helpers.root('src/index.html')]
+					exclude: [helpers.PATHS.root.join('server/views/index.html')]
 				},
 
 				{
 					test: /\.css$/,
 					loaders: ['to-string-loader', 'css-loader'],
-					exclude: [helpers.root('src/index.html')] },
+					exclude: [helpers.PATHS.root.join('server/views/index.html')] },
 
 				{
 					test: /\.html$/,
 					loader: 'raw-loader',
-					exclude: [helpers.root('src/index.html')]
+					exclude: [helpers.PATHS.root.join('server/views/index.html')]
 				}
 
 			],
@@ -93,7 +80,7 @@ module.exports = function(options) {
 				{
 					test: /\.(js|ts)$/,
 					loader: 'istanbul-instrumenter-loader',
-					include: helpers.root('src'),
+					include: helpers.PATHS.src,
 					exclude: [
 						/\.(e2e|spec)\.ts$/,
 						/node_modules/
@@ -118,13 +105,13 @@ module.exports = function(options) {
 
 		],
 
-	/*
+
 		tslint: {
 			emitErrors: false,
 			failOnHint: false,
 			resourcePath: 'src'
 		},
-*/
+
 
 		node: {
 			global: 'window',

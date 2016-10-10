@@ -1,46 +1,19 @@
-var webpack = require('webpack');
-var path = require('path');
-var fs = require('fs');
 
-function getModules() {
-	var nodeModules = {};
-	fs.readdirSync('node_modules')
-		.filter(function(x) {
-			return ['.bin'].indexOf(x) === -1;
-		})
-		.forEach(function(mod) {
-			nodeModules[mod] = 'commonjs ' + mod;
-		});
+switch (process.env.NODE_ENV) {
 
-	return nodeModules;
+	case 'production':
+		module.exports = require('./webpackServer/webpack.production')();
+		break;
+
+	case 'staging':
+		module.exports = require('./webpackServer/webpack.production')();
+		break;
+
+	case 'testing':
+		module.exports = require('./webpackServer/webpack.testing')();
+		break;
+
+	case 'development':
+	default:
+		module.exports = require('./webpackServer/webpack.development')();
 }
-
-
-module.exports = {
-	entry: [ path.join(__dirname, '/server/src/app.ts') ],
-	target: 'node',
-	output: {
-		path: path.join(__dirname, '/server/dist/'),
-		filename: 'server-bundle.js'
-	},
-	resolve: {
-		extensions: [ '', '.webpack.js', '.web.js', '.ts', '.js']
-	},
-	plugins: [
-		//new webpack.optimize.UglifyJsPlugin(), add to production
-		new webpack.BannerPlugin(
-			'require("source-map-support").install();',
-			{ raw: true, entryOnly: false }
-			)
-	],
-	externals: getModules(),
-	module: {
-		loaders: [
-			{
-				test: /\.tsx?$/,
-				loader: 'ts-loader'
-			}
-		]
-	},
-	devtool: 'source-map'
-};

@@ -8,7 +8,7 @@
     "buildGulp": "gulp",
     "buildWebpack": "webpack --config webpack.server.config.js",
     "buildWebpackClient": "webpack --config webpack.client.config.js",
-    "start": "node ./server/dist/server-bundle.js"
+    "start": "webpack --config webpack.server.config.js"
   },
   "repository": {
     "type": "git",
@@ -51,6 +51,8 @@
     "gulp-typescript": "^2.9.2",
     "json-loader": "^0.5.4",
     "raw-loader": "^0.5.1",
+    "start-server-webpack-plugin": "^2.0.1",
+    "string-replace-loader": "^1.0.5",
     "style-loader": "^0.12.4",
     "to-string-loader": "^1.1.4",
     "ts-loader": "^0.8.2",

@@ -43,7 +43,6 @@ function onListening(server, cb) {
 /**
  * Event listener for HTTP server "error" event.
  */
-
 function onError(port, host) {
 
     return function onError(error) {
@@ -82,6 +81,8 @@ const webServer =  {
 
 	_afterCallback: null,
 
+	server: null,
+
 	_addCallback: function(property, cb) {
 		if (cb && typeof cb !== 'function') {
 			throw Error('Arguemnt must be function!');
@@ -104,6 +105,8 @@ const webServer =  {
 		const port = normalizePort(app.get('port'));
 		const host = app.get('host');
 		const server = http.createServer(app);
+
+		this.server = server;
 
 		if (this._preCallback) {
 			this._preCallback(server);

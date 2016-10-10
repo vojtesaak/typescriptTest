@@ -26,7 +26,6 @@ module.exports = function(options) {
 	});
 
 
-
 	return webpackMerge(commonConfig({env: ENV}), {
 
 		debug: false,
@@ -90,8 +89,6 @@ module.exports = function(options) {
 			failOnHint: true,
 			resourcePath: 'src'
 		},
-
-
 
 		node: {
 			global: 'window',

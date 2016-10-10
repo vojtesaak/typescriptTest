@@ -1,4 +1,4 @@
-
+process.env.NODE_ENV = 'development';
 
 import path = require('path');
 import config from './config';
@@ -24,17 +24,16 @@ app.use(express.static(path.join(ROOT, 'server/views')));
 
 app.use(controllers);
 
-
 webServer.pre(server => {
 
-	io.attach(server);
 	const messages: string[] = [];
+
+	io.attach(server);
 
 	io.on('connection', function(socket) {
 		socket.emit('updateMessage',messages);
 		socket.on('message', function(message){
 			messages.push(new Date() + '  ' + message);
-			console.log(messages);
 			socket.emit('updateMessage', messages);
 			socket.broadcast.emit('updateMessage',messages);
 		});
@@ -46,6 +45,8 @@ webServer.pre(server => {
 webServer.after(()=> {
 	webpackDevServer.init();
 });
+
+
 
 webServer.run(app);
 
