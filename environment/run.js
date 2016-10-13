@@ -1,13 +1,22 @@
-const AppCompiler = require('./pipeline/build/AppCompiler');
+const OutputPurger = require('./pipeline/clear/OutputPurger');
+const ServiceCompiler = require('./pipeline/build/ServiceCompiler');
+
+const Apps = require('./apps');
+const _ = require('lodash');
 
 const appName = process.argv[2];
-const appPath = process.argv[3];
 
-if(appName && appPath) {
-	const compiler = new AppCompiler(appName, appPath);
+var appServices = Apps[appName.toLowerCase()];
 
-	compiler.compileAndWatch();
+if(appServices) {
+	OutputPurger.clearOutput().then(function() {
+		_.forEach(appServices, function(service) {
+			const compiler = new ServiceCompiler(service);
+
+			compiler.compileAndWatch();
+		});
+	});
 } else {
-	console.log("Usage: `npm start APP_NAME PATH_TO_APP_IN_WORKSPACE`");
-	console.log("Example: `npm start CommandBackend backend`");
+	console.log("Usage: `npm start APP_NAME`");
+	console.log("Example: `npm start VideoAdServer`");
 }

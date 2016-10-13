@@ -1,16 +1,16 @@
 var path = require('path');
 
 var PathProvider = {
-	getDistPath : function(appName) {
-		return path.join(process.cwd(), 'dist', appName);
+	getDistPath : function(serviceName) {
+		return path.join(process.cwd(), 'dist', serviceName);
 	},
 
 	getWorkspacePath: function() {
 		return path.join(process.cwd(), 'workspace');
 	},
 
-	getAppPath: function(appPath) {
-		return path.join(this.getWorkspacePath(), appPath);
+	getSourcePath: function(workspaceLoc) {
+		return path.join(this.getWorkspacePath(), workspaceLoc);
 	},
 
 	join: path.join

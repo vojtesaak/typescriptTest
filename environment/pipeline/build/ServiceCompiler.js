@@ -3,8 +3,12 @@ const ConfigBuilder = require("./bundling/ConfigBuilder");
 const config = require("../../../config");
 const _ = require("lodash");
 
-function AppCompiler(appName, appPath) {
-	const compiler = webpack(ConfigBuilder.getNewConfig(appName, appPath, 'app.ts'));
+function ServiceCompiler(service) {
+	const serviceName = service.getServiceName();
+	const workspacePath = service.getWorkspacePath();
+	const entryFile = service.getEntryFile();
+
+    const compiler = webpack(ConfigBuilder.getNewConfig(serviceName, workspacePath, entryFile));
 
 	this.compileAndWatch = function () {
 		compiler.watch({
@@ -18,7 +22,7 @@ function AppCompiler(appName, appPath) {
 			return handleFatalError(err);
 		}
 
-		var jsonStats = stats.toJson();
+		const jsonStats = stats.toJson();
 		if (jsonStats.errors.length > 0) {
 			return handleSoftErrors(jsonStats.errors);
 		}
@@ -31,11 +35,11 @@ function AppCompiler(appName, appPath) {
 	}
 
 	function handleFatalError(err) {
-		console.error('An error occurred in compiler', err);
+		console.error(`An error occurred in compiler`, err);
 	}
 
 	function handleSoftErrors(errors) {
-		console.warn("Some errors occurred while bundling app: ");
+		console.warn(`Some errors occurred while bundling service ${serviceName}: `);
 
 		_.forEach(errors, function (error) {
 			console.warn(error);
@@ -43,7 +47,7 @@ function AppCompiler(appName, appPath) {
 	}
 
 	function handleWarnings(warns) {
-		console.log('Some warnings were found while bundling app: ');
+		console.log(`Some warnings were found while bundling service ${serviceName}: `);
 
 		_.forEach(warns, function (error) {
 			console.log(error);
@@ -51,8 +55,8 @@ function AppCompiler(appName, appPath) {
 	}
 
 	function successfullyCompiled() {
-		console.log("Bundling complete!!!");
+		console.log(`Bundling of service ${serviceName} complete!!!`);
 	}
 }
 
-module.exports = AppCompiler;
+module.exports = ServiceCompiler;

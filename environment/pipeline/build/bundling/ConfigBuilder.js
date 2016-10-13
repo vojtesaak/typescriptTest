@@ -6,30 +6,30 @@ var PathProvider = require('../../../utils/PathProvider');
 var defaultTemplate = require('./config.template.js');
 
 var ConfigBuilder = {
-	getNewConfig: function(AppName, appPath, entryFile) {
-		const absolutePath = PathProvider.getAppPath(appPath);
+	getNewConfig: function(serviceName, workspaceLoc, entryFile) {
+		const absolutePath = PathProvider.getSourcePath(workspaceLoc);
 		let template = _.clone(defaultTemplate);
 
-		template.entry = createEntryPoint(AppName, PathProvider.join(absolutePath, entryFile));
-		template.output.path = PathProvider.getDistPath(AppName);
-		template.plugins = createPluginsList(AppName);
+		template.entry = createEntryPoint(serviceName, PathProvider.join(absolutePath, entryFile));
+		template.output.path = PathProvider.getDistPath(serviceName);
+		template.plugins = createPluginsList(serviceName);
 
 		return template;
 	}
 };
 
-function createEntryPoint(AppName, absolutePath) {
+function createEntryPoint(ServiceName, absolutePath) {
 	return {
-		[AppName]: absolutePath
+		[ServiceName]: absolutePath
 	};
 }
 
-function createPluginsList(AppName) {
+function createPluginsList(ServiceName) {
 	return [
 		new webpack.optimize.OccurenceOrderPlugin(true),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: [
-				AppName
+				ServiceName
 			],
 			minChunks: Infinity
 		})
