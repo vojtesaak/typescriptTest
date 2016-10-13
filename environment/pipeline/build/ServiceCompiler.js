@@ -2,6 +2,7 @@ const webpack = require("webpack");
 const ConfigBuilder = require("./bundling/ConfigBuilder");
 const config = require("../../../config");
 const _ = require("lodash");
+const Bluebird = require('bluebird');
 
 function ServiceCompiler(service) {
 	const serviceName = service.getServiceName();
@@ -11,13 +12,21 @@ function ServiceCompiler(service) {
     const compiler = webpack(ConfigBuilder.getNewConfig(serviceName, workspacePath, entryFile));
 
 	this.compileAndWatch = function () {
-		compiler.watch({
-			poll: true,
-			aggregateTimeout: config.build.aggregateTimeoutMs
-		}, compileCompleteCallback);
+		console.log(`Started to compile ${serviceName}`);
+
+		return Bluebird.fromCallback(function(callback) {
+			compiler.watch({
+				poll: true,
+				aggregateTimeout: config.build.aggregateTimeoutMs
+			}, function(err, stats) {
+				logResult(err, stats);
+
+				callback(err, stats);
+			});
+		});
 	};
 
-	function compileCompleteCallback(err, stats) {
+	function logResult(err, stats) {
 		if (err) {
 			return handleFatalError(err);
 		}

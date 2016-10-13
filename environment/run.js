@@ -1,22 +1,26 @@
 const OutputPurger = require('./pipeline/clear/OutputPurger');
-const ServiceCompiler = require('./pipeline/build/ServiceCompiler');
+const AppCompiler = require('./pipeline/build/AppCompiler');
 
 const Apps = require('./apps');
-const _ = require('lodash');
 
 const appName = process.argv[2];
 
-var appServices = Apps[appName.toLowerCase()];
-
-if(appServices) {
-	OutputPurger.clearOutput().then(function() {
-		_.forEach(appServices, function(service) {
-			const compiler = new ServiceCompiler(service);
-
-			compiler.compileAndWatch();
-		});
-	});
+if (isAppDefined()) {
+	OutputPurger.clearOutput().then(compileApp);
 } else {
 	console.log("Usage: `npm start APP_NAME`");
 	console.log("Example: `npm start VideoAdServer`");
+}
+
+function isAppDefined() {
+	return !!getApp();
+}
+
+function compileApp() {
+	var compiler = new AppCompiler(getApp());
+	return compiler.compileAndWatch();
+}
+
+function getApp() {
+	return Apps[appName.toLowerCase()];
 }
