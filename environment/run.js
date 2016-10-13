@@ -3,7 +3,7 @@ const AppCompiler = require('./pipeline/build/AppCompiler');
 const AppRunner = require('./pipeline/run/AppRunner');
 const Apps = require('./apps');
 
-const appName = process.argv[2];
+const appName = process.argv[2] || '';
 
 if (isAppDefined()) {
 	OutputPurger.clearOutput()
