@@ -6,25 +6,26 @@ const Bluebird = require('bluebird');
 
 function ServiceCompiler(service) {
 	const serviceName = service.getServiceName();
-	const workspacePath = service.getWorkspacePath();
-	const entryFile = service.getEntryFile();
-
-    const compiler = webpack(ConfigBuilder.getNewConfig(serviceName, workspacePath, entryFile));
+	const compiler = getCompiler();
 
 	this.compileAndWatch = function () {
 		console.log(`Started to compile ${serviceName}`);
 
-		return Bluebird.fromCallback(function(callback) {
+		return Bluebird.fromCallback(function (callback) {
 			compiler.watch({
 				poll: true,
 				aggregateTimeout: config.build.aggregateTimeoutMs
-			}, function(err, stats) {
+			}, function (err, stats) {
 				logResult(err, stats);
 
 				callback(err, stats);
 			});
 		});
 	};
+
+	function getCompiler() {
+		return webpack(ConfigBuilder.getNewConfig(service));
+	}
 
 	function logResult(err, stats) {
 		if (err) {

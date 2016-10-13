@@ -1,16 +1,22 @@
 "use strict";
 
-function ServiceDefinition (Name, workspacePath, entryFile) {
+const ServiceType = require('./ServiceType');
+
+function ServiceDefinition (definition) {
 	this.getServiceName = function() {
-		return Name;
+		return definition.name;
 	};
 
 	this.getWorkspacePath = function() {
-		return workspacePath;
+		return definition.workspacePath;
 	};
 
 	this.getEntryFile = function() {
-		return entryFile;
+		return definition.entryFile;
+	};
+
+	this.getType = function() {
+		return definition.type || ServiceType.none;
 	};
 }
 

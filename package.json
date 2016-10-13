@@ -4,7 +4,7 @@
 	"description": "iBB dev environment reloaded",
 	"scripts": {
 		"preinstall": "node environment/utils/PackageInstaller.js",
-		"postinstall": "node node_modules/typings/dist/bin.js install",
+		"postinstall": "node environment/utils/TypingsInstaller.js",
 		"test": "karma start",
 		"start": "node environment/run.js"
 	},

@@ -5,23 +5,29 @@ var _ = require('lodash');
 var PathProvider = require('../../../utils/PathProvider');
 var defaultTemplate = require('./config.template.js');
 
-var ConfigBuilder = {
-	getNewConfig: function(serviceName, workspaceLoc, entryFile) {
-		const absolutePath = PathProvider.getSourcePath(workspaceLoc);
+function ConfigBuilder() {
+	this.getNewConfig = function (service) {
+		const serviceName = service.getServiceName();
+
 		let template = _.clone(defaultTemplate);
 
-		template.entry = createEntryPoint(serviceName, PathProvider.join(absolutePath, entryFile));
+		template.entry = createEntryPoint(service);
 		template.output.path = PathProvider.getDistPath(serviceName);
 		template.plugins = createPluginsList(serviceName);
 
 		return template;
-	}
-};
-
-function createEntryPoint(ServiceName, absolutePath) {
-	return {
-		[ServiceName]: absolutePath
 	};
+}
+
+function createEntryPoint(service) {
+	const entryFile = service.getEntryFile();
+	const absolutePath = PathProvider.getSourcePath(service.getWorkspacePath());
+
+	const entries = {
+		[service.getServiceName()]: PathProvider.join(absolutePath, entryFile)
+	};
+
+	return entries;
 }
 
 function createPluginsList(ServiceName) {
@@ -36,6 +42,4 @@ function createPluginsList(ServiceName) {
 	];
 }
 
-Object.freeze(ConfigBuilder);
-
-module.exports = ConfigBuilder;
+module.exports = new ConfigBuilder();

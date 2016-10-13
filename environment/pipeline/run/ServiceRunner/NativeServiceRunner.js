@@ -16,7 +16,7 @@ function NativeServiceRunner (service) {
 	let childProcess = null;
 
 	this.run = function() {
-		childProcess = child_process.spawn(`node`, ['bundle.js'], {cwd: distPath, env: process.env, stdio: ['ignore', stdout, stderr]});
+		childProcess = child_process.spawn(`node`, [service.getServiceName() + '.bundle.js'], {cwd: distPath, env: process.env, stdio: ['ignore', stdout, stderr]});
 	};
 }
 

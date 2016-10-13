@@ -10,7 +10,9 @@ var webpackConfig = {
 	/**
 	 * Is filled by config builder
 	 */
-	output: {},
+	output: {
+		fileName: "[name].entry.js"
+	},
 	/**
 	 * Is filled by config builder
 	 */
