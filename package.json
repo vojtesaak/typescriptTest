@@ -1,24 +1,15 @@
 {
-	"name": "angular2-webpack",
+	"name": "dev-env-reloaded",
 	"version": "0.1.0",
-	"description": "Angular 2 Webpack ",
+	"description": "iBB dev environment reloaded",
 	"scripts": {
-		"preinstall": "node environmentSupport/PackageInstaller.js",
-		"`postinstall`": "node node_modules/typings/dist/bin.js install",
+		"preinstall": "node environment/utils/PackageInstaller.js",
+		"postinstall": "node node_modules/typings/dist/bin.js install",
 
-		"preprotractor": "npm run webdriver-update",
-		"protractor": "protractor",
-		"e2e": "npm run protractor",
 		"test": "karma start",
-		"start": "node environmentSupport/Runner.js"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/marc-harry/angular2-express-webpack"
+		"start": "node environment/run.js"
 	},
 	"author": "iBB",
-	"license": "MIT",
-	"homepage": "",
 	"dependencies": {
 	},
 	"devDependencies": {
