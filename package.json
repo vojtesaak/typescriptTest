@@ -51,6 +51,7 @@
 		"karma-webpack": "1.7.0",
 		"phantomjs": "^1.9.18",
 		"protractor": "2.5.1",
-		"bluebird": "^3.4.6"
+		"bluebird": "^3.4.6",
+		"ncp": "2.0.0"
 	}
 }
