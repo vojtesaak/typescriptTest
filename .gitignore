@@ -1,14 +1,6 @@
-
-# Typing TSD #
-/typings/
-
-
-/node_modules/
-
-# Dist #
-/dist
-
-
-# IDE #
+dist/
 .idea/
-*.swp
+githubSSH
+githubSSH.pub
+node_modules/
+typings/
