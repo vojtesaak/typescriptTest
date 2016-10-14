@@ -9,5 +9,5 @@ module.exports = function(){
 			new webpack.optimize.UglifyJsPlugin(),
 			//new webpack.HotModuleReplacementPlugin(),
 		]
-	})
+	});
 };
