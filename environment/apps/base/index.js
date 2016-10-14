@@ -3,6 +3,7 @@ const AppDefinition = require('../AppDefinition');
 const ServiceType = require('../ServiceType');
 
 module.exports = new AppDefinition([
+
 	new ServiceDefinition({
 		name: 'TestBackend',
 		workspacePath: 'backend',
@@ -15,10 +16,11 @@ module.exports = new AppDefinition([
 		entryFile: 'app.ts',
 		type: ServiceType.backend
 	}),
-	// new ServiceDefinition({
-	// 	name: 'FancyUI',
-	// 	workspacePath: 'ui',
-	// 	entryFile: 'app.ts',
-	// 	type: ServiceType.ui
-	// }),
+	new ServiceDefinition({
+		name: 'FancyUI',
+		workspacePath: 'ui',
+		entryFile: 'app.ts',
+		type: ServiceType.ui,
+		staticFilesFolder: 'static'
+	}),
 ]);

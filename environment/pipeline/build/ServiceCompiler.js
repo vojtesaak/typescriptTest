@@ -1,8 +1,10 @@
 const webpack = require("webpack");
-const ConfigBuilder = require("./bundling/ConfigBuilder");
-const config = require("../../../config");
 const _ = require("lodash");
 const Bluebird = require('bluebird');
+
+const config = require("../../../config");
+const ConfigBuilder = require("./bundling/ConfigBuilder");
+const postProcessors = require('./postProcessors');
 
 function ServiceCompiler(service) {
 	const serviceName = service.getServiceName();
@@ -20,6 +22,10 @@ function ServiceCompiler(service) {
 
 				callback(err, stats);
 			});
+		}).then(function() {
+			return postProcessors.run(service);
+		}).catch(function(err) {
+			console.log(err);
 		});
 	};
 

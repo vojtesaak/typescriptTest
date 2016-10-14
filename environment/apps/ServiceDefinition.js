@@ -18,6 +18,10 @@ function ServiceDefinition (definition) {
 	this.getType = function() {
 		return definition.type || ServiceType.none;
 	};
+
+	this.getStaticFileFolder = function() {
+		return definition.staticFilesFolder;
+	};
 }
 
 module.exports = ServiceDefinition;

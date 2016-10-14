@@ -4,6 +4,7 @@ var webpack = require('webpack');
 var _ = require('lodash');
 var PathProvider = require('../../../utils/PathProvider');
 var defaultTemplate = require('./config.template.js');
+const ServiceTypes = require('../../../apps/ServiceType');
 
 function ConfigBuilder() {
 	this.getNewConfig = function (service) {
