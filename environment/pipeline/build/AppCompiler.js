@@ -6,8 +6,8 @@ const Bluebird = require('bluebird');
 
 function AppCompiler (app) {
 	this.compileAndWatch = function() {
-		return Bluebird.map(app.getServices(), function(service) {
-			var serviceCompiler = new ServiceCompiler(service);
+		return Bluebird.map(app.getServiceBlueprints(), function(serviceBP) {
+			var serviceCompiler = new ServiceCompiler(serviceBP);
 
 			return serviceCompiler.compileAndWatch();
 		});

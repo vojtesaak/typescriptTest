@@ -4,14 +4,13 @@ const Bluebird = require('bluebird');
 
 const config = require("../../../config");
 const ConfigBuilder = require("./bundling/ConfigBuilder");
-const postProcessors = require('./postProcessors');
+const postCompileActions = require('./postCompileActions');
 
-function ServiceCompiler(service) {
-	const serviceName = service.getServiceName();
+function ServiceCompiler(serviceBlueprint) {
 	const compiler = getCompiler();
 
 	this.compileAndWatch = function () {
-		console.log(`Started to compile ${serviceName}`);
+		console.log(`Started to compile ${serviceBlueprint.name}`);
 
 		return Bluebird.fromCallback(function (callback) {
 			compiler.watch({
@@ -23,14 +22,14 @@ function ServiceCompiler(service) {
 				callback(err, stats);
 			});
 		}).then(function() {
-			return postProcessors.run(service);
+			return postCompileActions.run(serviceBlueprint);
 		}).catch(function(err) {
 			console.log(err);
 		});
 	};
 
 	function getCompiler() {
-		return webpack(ConfigBuilder.getNewConfig(service));
+		return webpack(ConfigBuilder.getNewConfig(serviceBlueprint));
 	}
 
 	function logResult(err, stats) {
@@ -55,7 +54,7 @@ function ServiceCompiler(service) {
 	}
 
 	function handleSoftErrors(errors) {
-		console.warn(`Some errors occurred while bundling service ${serviceName}: `);
+		console.warn(`Some errors occurred while bundling service ${serviceBlueprint.name}: `);
 
 		_.forEach(errors, function (error) {
 			console.warn(error);
@@ -63,7 +62,7 @@ function ServiceCompiler(service) {
 	}
 
 	function handleWarnings(warns) {
-		console.log(`Some warnings were found while bundling service ${serviceName}: `);
+		console.log(`Some warnings were found while bundling service ${serviceBlueprint.name}: `);
 
 		_.forEach(warns, function (error) {
 			console.log(error);
@@ -71,7 +70,7 @@ function ServiceCompiler(service) {
 	}
 
 	function successfullyCompiled() {
-		console.log(`Bundling of service ${serviceName} complete!!!`);
+		console.log(`Bundling of service ${serviceBlueprint.name} complete!!!`);
 	}
 }
 

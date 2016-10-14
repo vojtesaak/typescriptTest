@@ -3,7 +3,7 @@ const ServiceRunner = require('./ServiceRunner');
 const Bluebird = require('bluebird');
 
 function AppRunner (app) {
-	var services = app.getServices();
+	var services = app.getServiceBlueprints();
 
 	this.run = function() {
 		return Bluebird.map(services, function(service) {

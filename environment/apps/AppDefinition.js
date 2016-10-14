@@ -1,8 +1,8 @@
 "use strict";
 
-function AppDefinition (services) {
-	this.getServices = function() {
-		return services;
+function AppDefinition (blueprints) {
+	this.getServiceBlueprints = function() {
+		return blueprints;
 	};
 }
 

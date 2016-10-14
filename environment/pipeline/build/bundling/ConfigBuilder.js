@@ -1,45 +1,43 @@
 "use strict";
 
-var webpack = require('webpack');
-var _ = require('lodash');
-var PathProvider = require('../../../utils/PathProvider');
-var defaultTemplate = require('./config.template.js');
-const ServiceTypes = require('../../../apps/ServiceType');
+const webpack = require('webpack');
+const _ = require('lodash');
+const PathProvider = require('../../../utils/PathProvider');
+const defaultTemplate = require('./config.template.js');
 
 function ConfigBuilder() {
-	this.getNewConfig = function (service) {
-		const serviceName = service.getServiceName();
+	this.getNewConfig = function (serviceBluePrint) {
+		var configs = [];
 
-		let template = _.clone(defaultTemplate);
+		_.forOwn(serviceBluePrint.build.entries, function (config, entryName) {
+			let template = _.clone(defaultTemplate);
 
-		template.entry = createEntryPoint(service);
-		template.output.path = PathProvider.getDistPath(serviceName);
-		template.plugins = createPluginsList(serviceName);
+			template.target = config.target;
+			template.entry = createEntryPoints(serviceBluePrint, config, entryName);
+			template.output.path = PathProvider.getDistPath(serviceBluePrint.name);
+			template.plugins = createPluginsList();
 
-		return template;
+			configs.push(template);
+		});
+
+		return configs;
 	};
 }
 
-function createEntryPoint(service) {
-	const entryFile = service.getEntryFile();
-	const absolutePath = PathProvider.getSourcePath(service.getWorkspacePath());
+function createEntryPoints(blueprint, config, entryName) {
+	const entries = {};
 
-	const entries = {
-		[service.getServiceName()]: PathProvider.join(absolutePath, entryFile)
-	};
+	const entryFile = config.entryFile;
+	const absolutePath = PathProvider.getSourcePath(blueprint.workspacePath);
+
+	entries[entryName] = PathProvider.join(absolutePath, entryFile);
 
 	return entries;
 }
 
-function createPluginsList(ServiceName) {
+function createPluginsList() {
 	return [
-		new webpack.optimize.OccurenceOrderPlugin(true),
-		new webpack.optimize.CommonsChunkPlugin({
-			name: [
-				ServiceName
-			],
-			minChunks: Infinity
-		})
+		new webpack.optimize.OccurenceOrderPlugin(true)
 	];
 }
 

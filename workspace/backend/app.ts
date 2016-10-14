@@ -6,5 +6,5 @@ const printer:Printer = new Printer();
 setInterval(function() {
 	printer.print("I AM ALIVE");
 	printer.print(moment().format());
-}, 15000);
+}, 5000);
 
