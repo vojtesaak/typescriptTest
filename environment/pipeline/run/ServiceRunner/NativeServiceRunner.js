@@ -1,4 +1,5 @@
-"use strict";
+'use strict';
+
 const PathProvider = require('../../../utils/PathProvider');
 const child_process = require('child_process');
 const fs = require('fs');
@@ -8,27 +9,32 @@ const fs = require('fs');
  * Known problem is that cwd is set to '/' instead of passed cwd
  * @constructor
  */
-function NativeServiceRunner(service) {
-	const distPath = PathProvider.getDistPath(service.name);
-	const stdout = fs.openSync(PathProvider.join(distPath, 'console.log'), 'a');
-	const stderr = fs.openSync(PathProvider.join(distPath, 'err.log'), 'a');
+class NativeServiceRunner {
 
-	let childProcess = null;
+	constructor(service) {
+		this.service = service;
 
-	this.run = function () {
-		childProcess = child_process.spawn(`${getRunAppName()}`, [service.run.entry + '.bundle.js'], {
-			cwd: distPath,
+		this._distPath = PathProvider.getDistPath(service.name);
+		this._stdout = fs.openSync(PathProvider.join(this._distPath, 'console.log'), 'a');
+		this._stderr = fs.openSync(PathProvider.join(this._distPath, 'err.log'), 'a');
+
+		this._childProcess = null;
+	}
+
+	run() {
+		this._childProcess = child_process.spawn(`${this.getRunAppName()}`, [this.service.run.entry + '.bundle.js'], {
+			cwd: this._distPath,
 			env: process.env,
-			stdio: ['ignore', stdout, stderr]
+			stdio: ['ignore', this._stdout, this._stderr]
 		});
-	};
+	}
 
-	function getRunAppName() {
-		if(service.run.command && service.run.command !== 'node') {
-			return `../../node_modules/${service.run.command}/bin/${service.run.command}`;
+	getRunAppName() {
+		if(this.service.run.command && this.service.run.command !== 'node') {
+			return `../../node_modules/${this.service.run.command}/bin/${this.service.run.command}`;
 		}
 
-		return service.run.command || 'node';
+		return this.service.run.command || 'node';
 	}
 }
 

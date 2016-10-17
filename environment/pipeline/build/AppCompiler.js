@@ -1,17 +1,21 @@
-"use strict";
+'use strict';
 
 const ServiceCompiler = require('./ServiceCompiler');
 const _ = require('lodash');
 const Bluebird = require('bluebird');
 
-function AppCompiler (app) {
-	this.compileAndWatch = function() {
-		return Bluebird.map(app.getServiceBlueprints(), function(serviceBP) {
-			var serviceCompiler = new ServiceCompiler(serviceBP);
+class AppCompiler {
 
+	constructor(app) {
+		this.app = app;
+	}
+
+	compileAndWatch() {
+		return Bluebird.map(this.app.getServiceBlueprints(), (serviceBP) => {
+			const serviceCompiler = new ServiceCompiler(serviceBP);
 			return serviceCompiler.compileAndWatch();
 		});
-	};
+	}
 }
 
 module.exports = AppCompiler;

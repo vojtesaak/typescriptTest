@@ -1,3 +1,5 @@
+'use strict';
+
 const OutputPurger = require('./pipeline/clear/OutputPurger');
 const AppCompiler = require('./pipeline/build/AppCompiler');
 const AppRunner = require('./pipeline/run/AppRunner');
@@ -10,8 +12,8 @@ if (isAppDefined()) {
 		.then(compileApp)
 		.then(runApp);
 } else {
-	console.log("Usage: `npm start APP_NAME`");
-	console.log("Example: `npm start VideoAdServer`");
+	console.log('Usage: `npm start APP_NAME`');
+	console.log('Example: `npm start VideoAdServer`');
 }
 
 function isAppDefined() {

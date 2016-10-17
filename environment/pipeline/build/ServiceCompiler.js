@@ -12,24 +12,21 @@ function ServiceCompiler(serviceBlueprint) {
 	this.compileAndWatch = function () {
 		console.log(`Started to compile ${serviceBlueprint.name}`);
 
-		return Bluebird.fromCallback(function (callback) {
-			compiler.watch({
-				poll: true,
-				aggregateTimeout: config.build.aggregateTimeoutMs
-			}, function (err, stats) {
-				logResult(err, stats);
-
-				callback(err, stats);
-			});
-		}).then(function() {
-			return postCompileActions.run(serviceBlueprint);
-		}).catch(function(err) {
-			console.log(err);
-		});
+		return Bluebird.fromCallback((callback) => {
+				compiler.watch({
+					poll: true,
+					aggregateTimeout: config.build.aggregateTimeoutMs
+				},  (err, stats) => {
+					logResult(err, stats);
+					callback(err, stats);
+				});
+			})
+			.then(() =>  postCompileActions.run(serviceBlueprint))
+			.catch(console.log);
 	};
 
 	function getCompiler() {
-		return webpack(ConfigBuilder.getNewConfig(serviceBlueprint));
+		return webpack(ConfigBuilder.getNewConfig(serviceBlueprint))
 	}
 
 	function logResult(err, stats) {

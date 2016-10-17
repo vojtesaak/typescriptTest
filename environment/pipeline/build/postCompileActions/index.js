@@ -1,11 +1,14 @@
+'use strict';
+
 const Bluebird = require('bluebird');
 
 const postCompileActions = [
 	require('./StaticFileMover')
 ];
 
-function PostProcessorsRunner() {
-	this.run = function(service) {
+class PostProcessorsRunner {
+
+	run (service) {
 		return Bluebird.each(postCompileActions, (postCompiler) => postCompiler.run(service));
 	}
 }
