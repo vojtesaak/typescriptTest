@@ -16,10 +16,9 @@ child_process.execSync('node node_modules/typings/dist/bin.js install', {cwd: pr
 typings_install_recursive(root);
 
 function typings_install_recursive(folder) {
-	const has_package_json = hasPackageJson(folder);
 	// Since this script is intended to be run as a "preinstall" command,
 	// skip the root folder, because it will be `npm install`ed in the end.
-	if (folder !== root && has_package_json) {
+	if (hasTypingsJson(folder)) {
 		console.log('===================================================================');
 		console.log(`Performing "typings install" inside ${folder === root ? 'root folder' : './' + path.relative(root, folder)}`);
 		console.log('===================================================================');
@@ -32,8 +31,10 @@ function typings_install_recursive(folder) {
 	}
 }
 
-function typings_install() {
-	child_process.execSync('node node_modules/typings/dist/bin.js install', {cwd: process.cwd(), env: process.env, stdio: 'inherit'});
+function typings_install(folder) {
+	var typingsModuleLocation = PathProvider.join(PathProvider.getWorkspacePath(), '..', 'node_modules', 'typings', 'dist', 'bin.js');
+
+	child_process.execSync(`node ${typingsModuleLocation} install`, {cwd: folder, env: process.env, stdio: 'inherit'});
 }
 
 function subfolders(folder) {
@@ -43,6 +44,6 @@ function subfolders(folder) {
 		.map(subfolder => path.join(folder, subfolder));
 }
 
-function hasPackageJson(folder) {
+function hasTypingsJson(folder) {
 	return fs.existsSync(path.join(folder, 'typings.json'));
 }

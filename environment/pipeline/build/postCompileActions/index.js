@@ -3,7 +3,8 @@
 const Bluebird = require('bluebird');
 
 const postCompileActions = [
-	require('./StaticFileMover')
+	require('./StaticFileMover'),
+	require('./NodeJsDepsMover')
 ];
 
 class PostProcessorsRunner {

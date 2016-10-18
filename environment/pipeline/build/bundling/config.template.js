@@ -35,7 +35,7 @@ var defaultConfig = {
 	devtool: 'source-map',
 	cache: false,
 	debug: true,
-	context: __dirname,
+	context: process.cwd(),
 	output: {
 		filename: '[name].bundle.js',
 		sourceMapFilename: '[name].map',
@@ -43,7 +43,7 @@ var defaultConfig = {
 	},
 
 	resolve: {
-		root: __dirname,
+		root: process.cwd(),
 		extensions: ['', '.ts', '.js', '.json']
 	},
 

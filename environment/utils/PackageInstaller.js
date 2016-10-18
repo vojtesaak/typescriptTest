@@ -10,10 +10,9 @@ const root = PathProvider.getWorkspacePath();
 npm_install_recursive(root);
 
 function npm_install_recursive(folder) {
-	const has_package_json = hasPackageJson(folder);
 	// Since this script is intended to be run as a "preinstall" command,
 	// skip the root folder, because it will be `npm install`ed in the end.
-	if (folder !== root && has_package_json) {
+	if (hasPackageJson(folder)) {
 		console.log('===================================================================');
 		console.log(`Performing "npm install" inside ${folder === root ? 'root folder' : './' + path.relative(root, folder)}`);
 		console.log('===================================================================');

@@ -21,6 +21,7 @@ function ServiceCompiler(serviceBlueprint) {
 					callback(err, stats);
 				});
 			})
+			.tap(() => console.log(`Service ${serviceBlueprint.name} successfully compiled`))
 			.then(() =>  postCompileActions.run(serviceBlueprint))
 			.catch(console.log);
 	};
