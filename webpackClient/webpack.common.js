@@ -25,6 +25,8 @@ module.exports = function(options) {
 
 		cache: false,
 
+		watch: true,
+
 		context: srcPath,
 
 		entry: {

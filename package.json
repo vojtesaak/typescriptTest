@@ -5,6 +5,7 @@
   "main": "",
   "scripts": {
     "postinstall": "./node_modules/.bin/typings install",
+	"buildTsc": "tsc -p ./server/src",
     "buildGulp": "gulp",
     "buildWebpack": "webpack --config webpack.server.config.js",
     "buildWebpackClient": "webpack --config webpack.client.config.js",
@@ -26,6 +27,7 @@
     "@angular/platform-browser-dynamic": "2.0.0-rc.4",
     "@angular/router": "3.0.0-beta.2",
     "babel": "^5.8.29",
+    "compression-webpack-plugin": "^0.3.2",
     "core-js": "^2.2.0",
     "express": "^4.13.3",
     "file-loader": "^0.8.4",

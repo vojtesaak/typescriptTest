@@ -25,8 +25,6 @@ module.exports = function(options) {
 		HMR: false
 	});
 
-
-
 	return webpackMerge(commonConfig({env: ENV}), {
 
 		debug: false,
@@ -35,11 +33,9 @@ module.exports = function(options) {
 
 		plugins: [
 
-
 			new WebpackMd5Hash(),
 
 			new DedupePlugin(),
-
 
 			// NOTE: when adding more properties make sure you include them in custom-typings.d.ts
 			new DefinePlugin({
@@ -51,7 +47,6 @@ module.exports = function(options) {
 					'HMR': METADATA.HMR
 				}
 			}),
-
 
 			// NOTE: To debug prod builds uncomment //debug lines and comment //prod lines
 			new UglifyJsPlugin({
@@ -76,13 +71,10 @@ module.exports = function(options) {
 				comments: false //prod
 			}),
 
-
 			new NormalModuleReplacementPlugin(
 				/angular2-hmr/,
 				helpers.PATHS.root.join('webpackClient/modules/angular2-hmr-prod.js')
 			)
-
-
 		],
 
 		tslint: {
@@ -90,8 +82,6 @@ module.exports = function(options) {
 			failOnHint: true,
 			resourcePath: 'src'
 		},
-
-
 
 		node: {
 			global: 'window',

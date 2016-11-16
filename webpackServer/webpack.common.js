@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-
+const CompressionPlugin = require("compression-webpack-plugin");
 const path = require('path');
 const fs = require('fs');
 
@@ -41,7 +41,16 @@ module.exports = function() {
 			new webpack.BannerPlugin(
 				'require("source-map-support").install();',
 				{ raw: true, entryOnly: false }
-			)
+			),
+
+			new CompressionPlugin({
+				asset: '[path].gz[query]',
+				algorithm: 'gzip',
+				test: /\.js$|\.ts|\.html$/,
+				threshold: 10240,
+				minRatio: 0.8
+			})
+
 		],
 
 		externals: getModules(),

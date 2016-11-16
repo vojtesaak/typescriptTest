@@ -6,7 +6,9 @@ const io = require('socket.io-client');
 @Component({
   	selector: 'app',
   	template: `
-		<h1>HELLO WORLD!!</h1>
+		<h1>HELLO WORLD :) !!!</h1>
+		
+	
   		<input type="text" [(ngModel)]="message">
   		<button (click)="addMessage()"> Add message</button>
   	  	<div *ngFor="let message of messages">{{message}}</div>
